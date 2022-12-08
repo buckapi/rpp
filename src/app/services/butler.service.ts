@@ -17,6 +17,7 @@ export class Butler {
     preview:any={};
     bramch:any={};
     specialtyToDelete:any={};
+    serviceToAdd:any={};
     serviceToDelete:any={};
     stylistToDelete:any={};
     deal:any={};
@@ -25,6 +26,7 @@ export class Butler {
     especialidadesSize:number=0;
     especialistasSize:number=0;
     imagePreviewProduct:string="";
+    stylistName:string="";
       subTotal:number=0;
     review:boolean=false;
     vector:any={};       

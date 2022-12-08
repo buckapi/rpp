@@ -181,7 +181,6 @@
                                         </div>
                                         <p></p>
                                          <p>
-                                            Precio sugerido
                                         </p>
                                         <div class="form-group">
                                             <input  class="form-control"  upperCase  type="number"
@@ -466,6 +465,121 @@
                             <span class="handle"></span>
                         </label>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modal sidebarMenu -left --fullScreen modal-filter fade" id="mdllFilter" tabindex="-1"
+        aria-labelledby="sidebarMenuLabel3" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="title-modal">+ ticket {{_butler.stylistName}}</h1>
+                    <button type="button" class="btn btn-clear">Cancelar</button>
+                    <button type="button" class="btn btnClose" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <div class="grid_buttonUpload">
+                    <div class="row">     
+                       
+                        <div class="col-md-6"  [hidden]="!adding">
+                            <form [formGroup]="addServiceForm" (ngSubmit)="addServ()">   
+                                <div class="form-group">
+                                <label>Agregar Servicio</label>
+                                <select   #cards class="form-control  " id="card"  (change)="addService(cards.value)" >
+                                    <option   [hidden]="cardsSelected"  >
+                                        <span >
+                                        Seleccione...  
+                                        </span>
+                                    </option>
+                                    <option   *ngFor="let card of _butler.cards;let i = index"value="{{i}}" [hidden]="card.status!='active'">{{card.name}}  </option>
+                                </select>
+                                </div>
+                                <div [hidden]="!onAdd">
+                                    
+                                {{this._butler.serviceToAdd.name}} Precio sugerido: {{this._butler.serviceToAdd.basePrice}} 
+                                </div>
+                                <div class="form-group" [hidden]="!onAdd">
+                                    <input  class="form-control"    type="number"
+                                    [ngModel]="ammount"
+                                    formControlName="ammount"
+                                    class="form-control"
+                                    [ngClass]="{ 'is-invalid': submittedService && z['ammount'].errors }" 
+                                    style="margin-top:10%;" 
+                                    >
+                                </div>
+                                <div *ngIf="submittedService && z['ammount'].errors" class="invalid-feedback">
+                                    <div *ngIf="z['ammount'].errors['required']">Campo requerido</div>
+                                </div>
+                                <p></p>
+                                 <p>
+                                   
+                                </p>
+                                <p></p>
+                                <p></p>
+                                <button disabled [hidden]="addTicketFlag" type="submit"  class="btn btn-md-arrow bg-success w-100" style="color:white;" data-bs-dismiss="modal" style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Agregar
+                                <div class="ico">
+                                    <i class="ri-add-line"></i>
+                                </div>
+                                </button>
+                                <button [hidden]="!addTicketFlag || !onAdd" type="submit"  class="btn btn-md-arrow bg-success w-100" style="color:white;" style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Agregar
+                                <div class="ico">
+                                  <i class="ri-arrow-drop-right-line"></i>
+                                </div>
+                                </button>
+                            </form>
+                        </div>
+                         <div class="col-md-6" [hidden]="empty">
+                            <p  [hidden]="empty">
+                                
+                            Servicios agregados al ticket:
+                            </p>
+                            <!-- <p [hidden]="empty">Total: {{total}}</p> -->
+                             <div class="content-list-sellers">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item" *ngFor="let service of ticketServices " >
+                                        <div class="nav-link item-user-seller">
+                                            <a class="item-user-img"  >
+                                                <div class="txt-user">
+                                                    <h5> 
+                                                    </h5>
+                                                    <p>{{service.name}}
+                                                 </p>
+                                                </div>
+                                            </a>
+                                            <div class="other-option" style="margin-right:2%; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#mdllUploadItem" (click)="delete(service)">
+                                                <div class="color-text rounded-pill bg-snow btn-xs-size " >
+                                                    <i class="ri-delete-bin-fill text-danger" style="font-size: 1.3rem; margin-right: 10%; font-weight: initial;"> </i>
+                                                 {{service.ammount}}</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>                  
+                </div>
+
+                </div>
+                <div class="modal-footer justify-content-center border-0 pt-2">
+                   <!--  <a class="btn btn-apply-filter"  [hidden]="adding" (click)="goAdding()">
+                        <p>Agregar servicio<span></span></p>
+                        <div class="ico">
+                            <i class="ri-add-line"></i>
+                        </div>
+                    </a>  --> 
+                    <button disabled [hidden]="sendTicketFlag" type="submit"  class="btn btn-md-arrow bg-primary w-100" style="color:white;" data-bs-dismiss="modal" style="margin-top:10%;color:white; font-weight:900; justify-content: center;" [hidden]="empty">Total: {{total}}
+                    <div class="ico">
+                        <i class="ri-check-line"></i>
+                    </div>
+                    </button> 
+                    <button  [hidden]="!sendTicketFlag || empty" type="submit"  class="btn btn-md-arrow bg-primary w-100" style="color:white;" data-bs-dismiss="modal" style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Total: {{total}}
+                    <div class="ico">
+                        <i class="ri-check-line"></i>
+                    </div>
+                    </button>
                 </div>
             </div>
         </div>

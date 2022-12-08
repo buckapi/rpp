@@ -40,14 +40,22 @@ branchs$:any;
       'assets/assetsryal/work.png'
     ]
   public options:any=[];
+  public ticketServices:any=[];
     public specialtyToDelete :any={};
     public stylistToDelete :any={};
     public serviceToDelete :any={};
     public itemSpecialty :any={};
     public itemStylisty :any={};
     public itemService :any={};
+    public card :any={};
+    public cardsSelected :any=false;
     submittedStylist = false;
+    onAdd = false;
+    adding = true;
     sendStylistFlag = false;
+    empty = true;
+    sendTicketFlag = false;
+    addTicketFlag = false;
   submittedSpecialty = false;
   submittedService = false;
   showB=false;  
@@ -55,6 +63,8 @@ branchs$:any;
   branchSelected="";
   mensaje="Salida registrada!";
   randomSerial=0;
+  ammount=0;
+  total=0;
     get f(): { [key: string]: AbstractControl } {
       return this.specialty.controls;
     }
@@ -64,7 +74,13 @@ branchs$:any;
     get h(): { [key: string]: AbstractControl } {
       return this.service.controls;
     }
+    get z(): { [key: string]: AbstractControl } {
+      return this.service.controls;
+    }
 
+   addServiceForm: FormGroup = new FormGroup({
+    ammount: new FormControl('')
+  });
    specialty: FormGroup = new FormGroup({
     name: new FormControl('')
   });
@@ -157,6 +173,12 @@ public preview :any={
       })
       .catch(error => console.log(error));
   }
+  public goAdding(){
+    this.adding=true;
+  }
+  public delete(service:any){
+  }
+
 public setBranch(name:any){
   console.log('dato: '+name);
 this.itemStylisty.category=name;
@@ -221,12 +243,12 @@ public plus(){
       return
     }
     this.itemService=this.service.value;name;
-     this.itemService.status="active";
-       this.dataApiService.saveService(this.itemService)
-   .subscribe((res:any) => {
-       this.toastSvc.success("servicio agregado con exito!" );
-       this.router.navigate(['/sumary']);
-     });    
+    this.itemService.status="active";
+    this.dataApiService.saveService(this.itemService)
+    .subscribe((res:any) => {
+    this.toastSvc.success("servicio agregado con exito!" );
+    this.router.navigate(['/sumary']);
+    });    
 }
 public deleteSpecialty(){
   this.specialtyToDelete=this._butler.specialtyToDelete;;
@@ -352,7 +374,29 @@ public loadCards(){
     this.cards$.subscribe((data:any) => {
       let size = data.length;
       this._butler.cardsSize=size;
+        this._butler.cards=[];
+   for (let i=0;i<size;i++){
+      this._butler.cards.push(data[i]);
+      }
+   
     });
+}
+public addServ(){
+    this._butler.serviceToAdd.ammount=this.addServiceForm.value.ammount;
+    this.ticketServices.push(this._butler.serviceToAdd);
+    this.total=this.total+this.addServiceForm.value.ammount;
+    this.ammount=0;
+    this.onAdd=false;
+    this.empty=false;
+}
+
+public addService(i:any){
+  if (i==="Seleccione..."){
+    return
+  }
+  this.onAdd=true;
+  this.addTicketFlag=true;
+  this._butler.serviceToAdd=this._butler.cards[i];
 }
 public loadBranchs(){
   this.branchs$=this.dataApiService.getAllBranchs();
@@ -380,6 +424,11 @@ public loadBranchs(){
       {
         name: ['', Validators.required],
         basePrice: [0, Validators.required]
+      }
+    );
+    this.addServiceForm = this.formBuilder.group(
+      {
+        ammount: [0, Validators.required]
       }
     );
 this.calculate() 

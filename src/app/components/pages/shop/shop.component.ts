@@ -50,6 +50,10 @@ export class ShopComponent implements AfterViewInit {
 
     }
 
+  openModalTicket(i:any,member:any){
+    this._butler.modalOption=i;
+    this._butler.stylistName=member.name
+  }
   openModal(i:any){
     this._butler.modalOption=i;
   }
