@@ -50,7 +50,7 @@
                 <div class="item_link"  >
                     <a [routerLink]="['/sumary']"class="btn btn_navLink" aria-label="btnNavigation">
                         <div class="icon_current" >
-                            <i class="ri-home-3-line " [ngStyle]="{'color': router.url.includes('/sumary') ? 'blue' : 'black'}"></i>
+                            <i class="ri-todo-line " [ngStyle]="{'color': router.url.includes('/sumary') ? 'blue' : 'black'}"></i>
                         </div>
                         <div class="icon_active">
                             <i class="ri-todo-fill" [ngStyle]="{'color': router.url.includes('/sumary')  ? 'blue' : 'black'}"></i>
@@ -280,9 +280,6 @@
             </div>
         </div>
     </div>
-    <!-- ===================================
-      START THE MODAL ADD ETH
-    ==================================== -->
     <div class="modal transition-bottom screenFull defaultModal mdlladd__rate fade" id="mdllAddETH" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -295,9 +292,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="content-upload-item">
-                     <!--    <p class="text-center">
-                            Select one of the options to deposit <br> ETH to your wallet
-                        </p> -->
+         
                         <div class="un-navMenu-default margin-t-30 p-0">
                             <ul class="nav flex-column">
                                 <li class="nav-item mb-3">
@@ -344,9 +339,6 @@
             </div>
         </div>
     </div>
-    <!-- ===================================
-      START THE MODAL SIDEBAR MENU - CONNECTED
-    ==================================== -->
     <div class="modal sidebarMenu -left fade" id="mdllSidebar-connected" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -541,11 +533,11 @@
                                     <ul class="nav flex-column">
                                         <li class="nav-item" *ngFor="let service of ticketServices, let i = index " >
                                             <div class="nav-link item-user-seller">
-                                                <a class="item-user-img"  >
+                                                <a class="item-user-img"  style="  text-decoration: none !important;">
                                                     <div class="txt-user">
                                                         <h5> 
                                                         </h5>
-                                                        <p>{{service.name}}
+                                                        <p >{{service.name}}
                                                      </p>
                                                     </div>
                                                 </a>
@@ -567,7 +559,7 @@
                             <div class="col-md-12"  [hidden]="!adding">
                                 <form [formGroup]="addServiceForm" (ngSubmit)="addServ()">   
                                     <div class="form-group">
-                                    <label>Metodo de pago</label>
+                                    <label>Metodo de pago <span style="color:red;" [hidden]="methodSelected">*</span><i  [hidden]="!methodSelected"class="ri-check-line " style="color:green;"></i></label>
                                     <select   #methodSelect class="form-control  " id="methodSelect"  (change)="setMethod(methodSelect.value)" >
                                         <option   [hidden]="methodSelected"  >
                                             <span >
@@ -581,20 +573,9 @@
                                         
                                     {{this._butler.serviceToAdd.name}} Precio sugerido: {{this._butler.serviceToAdd.basePrice}} 
                                     </div>
-                                  <!--       <div class="form-group" >
-                                        <input  class="form-control"    type="number"
-                                        [ngModel]="pay"
-                                        formControlName="pay"
-                                        class="form-control"
-                                        [ngClass]="{ 'is-invalid': submittedPaymment && r['pay'].errors }" 
-                                        style="margin-top:10%;" 
-                                        >
-                                    </div>
-                                    <div *ngIf="submittedPaymment && r['pay'].errors" class="invalid-feedback">
-                                        <div *ngIf="r['pay'].errors['required']">Campo requerido</div>
-                                    </div>
-                          -->        <p (click)="setEqual()" style="cursor:pointer;" [hidden]="empty">Total a pagar: {{total}}</p>
+                               <p (click)="setEqual()" style="cursor:pointer;" [hidden]="empty">Total a pagar: <span style="color:blue;">{{total}}</span></p>
                            <div class="col-lg-4">
+                            <h4>Pago: </h4>
                                         <input type="number" class="form-control"  [ngModelOptions]="{standalone: true}"  [(ngModel)]="pay"
                                         style="height: 5rem;width: 10rem;font-size: 2.3rem;" 
                                         >
@@ -605,63 +586,32 @@
                                     <p></p>
                                     <p></p>
                              
-                                    <h4>Cambio: </h4>
+                                    <h4 [hidden]="pay-total<0">Cambio: </h4>
                                         <h1>
                                             <span [hidden]="pay-total<0">{{pay-total |  number :'1.2-2'}}</span>
                                         </h1>
                                 </form>
                             </div>
-                           <!--  <div class="col-md-6" [hidden]="empty">
-                                <p  [hidden]="empty">
-                                    
-                                Servicios agregados al ticket:
-                                </p>
-                                <p [hidden]="empty">Total: {{total}}</p>
-                                 <div class="content-list-sellers">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item" *ngFor="let service of ticketServices, let i = index " >
-                                            <div class="nav-link item-user-seller">
-                                                <a class="item-user-img"  >
-                                                    <div class="txt-user">
-                                                        <h5> 
-                                                        </h5>
-                                                        <p>{{service.name}}
-                                                     </p>
-                                                    </div>
-                                                </a>
-                                                <div class="other-option" style="margin-right:2%; cursor: pointer;" (click)="remove(i)">
-                                                    <div class="color-text rounded-pill bg-snow btn-xs-size " >
-                                                        <i class="ri-delete-bin-fill text-danger" style="font-size: 1.3rem; margin-right: 10%; font-weight: initial;"> </i>
-                                                     {{service.ammount}}</div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> -->
+                   
                         </div>                  
                     </div>
 
 
                 </div>
                 <div class="modal-footer justify-content-center border-0 pt-2">
-                 <!--    <button disabled [hidden]="sendTicketFlag" type="submit"  class="btn btn-md-arrow bg-primary w-100" style="color:white;" data-bs-dismiss="modal" style="margin-top:10%;color:white; font-weight:900; justify-content: center;" [hidden]="empty">Total: {{total}}
-                    <div class="ico">
-                        <i class="ri-check-line"></i>
-                    </div>
-                    </button>  -->
+    
                     <button  [hidden]="!sendTicketFlag || empty || ticketListSize===0 || step!=1"
 
                         (click)="next(2)"
                      class="btn btn-md-arrow bg-primary w-100" style="color:white;"  style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Siguiente
                     <div class="ico">
-                        <i class="ri-check-line"></i>
+                        <i class="ri-arrow-right-s-line"></i>
                     </div>
                     </button>
                     <button disabled="" [hidden]="!sendTicketFlag || empty || ticketListSize===0 || step!=2  || pay-total>-1"
 
                         (click)="next(3)"
-                     class="btn btn-md-arrow bg-primary w-100" style="color:white;"  style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Procesar
+                     class="btn btn-md-arrow bg-primary w-100" style="color:white;"  style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Aceptar
                     <div class="ico">
                         <i class="ri-check-line"></i>
                     </div>
@@ -669,7 +619,7 @@
                     <button  [hidden]="!sendTicketFlag || empty || ticketListSize===0 || step!=2 || !methodSelected || pay-total<0"
 
                         (click)="next(3)"
-                     class="btn btn-md-arrow bg-primary w-100" style="color:white;"  style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Procesar
+                     class="btn btn-md-arrow bg-primary w-100" style="color:white;"  style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Aceptar
                     <div class="ico">
                         <i class="ri-check-line"></i>
                     </div>
