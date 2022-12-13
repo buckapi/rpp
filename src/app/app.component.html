@@ -5,7 +5,7 @@
     <router-outlet></router-outlet>
         <div class="space-sticky"></div>          
     </div>
-        <footer class="un-bottom-navigation filter-blur" [hidden]="router.url.includes('/login') || router.url.includes('/member')">
+        <footer class="un-bottom-navigation filter-blur" [hidden]="router.url.includes('/login') || router.url.includes('/member') || router.url.includes('/ticketsuccess') ">
             <div class="em_body_navigation border-0 -active-links">
                 <div class="item_link" >
                     <a [routerLink]="['estilistas']"class="btn btn_navLink" aria-label="btnNavigation">
@@ -652,17 +652,17 @@ data-bs-dismiss="modal"
                         <div class="row">     
                            
                         
-                             <div class="col-md-6" >
+                             <div class="col-md-12" >
                                 
                                 <h2 >  Estilista:   
-                             <span style="color:blue;">
+                             <span style="font-weight: 100;" class="color-blue">
                                  
                                  {{_butler.ticket.stylist}} 
                              </span>
                                 </h2>
                                
                                 <h2 > Cliente: 
-                             <span style="color:blue;">
+                             <span style="font-weight: 100;" class="color-blue">
                              {{_butler.ticket.customer}} 
                              </span>
                                  
@@ -670,17 +670,35 @@ data-bs-dismiss="modal"
                                 <!-- <p [hidden]="empty">Total: {{total}}</p> -->
                                 <h2>
                                     
-                                Servicios prestados:
+                                Detalle:
                                 </h2>
                                  <div class="content-list-sellers">
                                     <ul class="nav flex-column">
+                                         <li class="nav-item"   style="height:3rem;">
+                                            <div class="nav-link item-user-seller">
+                                                <a class="item-user-img"  style="  text-decoration: none !important;">
+                                                    <div class="text-dark">
+                                                        <h5> 
+                                                             DESCRIPCION
+                                                        </h5>
+                                                        <p >
+                                                     </p>
+                                                    </div>
+                                                </a>
+                                                <div class="other-option text-dark" style="margin-right:2%; " >
+                                                  MONTO
+                                                </div>
+                                            </div>
+                                        </li>
                                         <li class="nav-item" *ngFor="let service of _butler.ticket.ticketServices, let i = index "  style="height:3rem;">
                                             <div class="nav-link item-user-seller">
                                                 <a class="item-user-img"  style="  text-decoration: none !important;">
-                                                    <div class="txt-user">
+                                                    <div class="text-dark">
                                                         <h5> 
+                                                            (1)
+                                                            {{service.name}}
                                                         </h5>
-                                                        <p >{{service.name}}
+                                                        <p >
                                                      </p>
                                                     </div>
                                                 </a>
@@ -693,24 +711,63 @@ data-bs-dismiss="modal"
                                         </li>
                                     </ul>
                                 </div>
+
                                 <p></p>
-                                <div>
-                                    <div>Total:</div>
-                                    <div> 
-                                        <span style="color:blue;">
+                                <p></p>
+                                <p></p>
+                                <div style="justify-content: end; display: flex;">
+                                    <div style="width:30%;">
+                                        <h5>
+                                            
+                                    Total: 
+                                        </h5>
+                                </div>
+                                    <div style="width:20%; text-align: end;"> 
+                                        <span style="font-weight: 100;"class="color-blue">
                                      {{_butler.ticket.total | number :'1.0'}}
                                         </span>
                                     </div>
                                 </div>
-                                 <div>
-                                 <div>Cobro:</div>
-                                    <div> 
-                                        <span style="color:blue;">
-                                     {{_butler.ticket.pay | number :'1.0'}}
-                                        </span>
-                                    </div>
+                                 <div  style="justify-content: end; display: flex;">
+                                 <div style="width:30%;">
+                                        <h5>
+
+                                        Cobro:
+                                        </h5>
                                 </div>
-                            
+                                <div style="width:20%;text-align: end;"> 
+                                    <span style="font-weight: 100;"class="color-blue">
+                                 {{_butler.ticket.cobro | number :'1.0'}}
+                                    </span>
+                                </div>
+                                </div>
+                                 <div  style="justify-content: end; display: flex;" >
+                                 <div style="width:30%;">
+                                        <h5>
+
+                                        Cambio:
+                                        </h5>
+                                </div>
+                                <div style="width:20%;text-align: end;"> 
+                                    <span style="font-weight: 100;"class="color-blue">
+                                 {{_butler.ticket.cambio | number :'1.0'}}
+                                    </span>
+                                </div>
+                                </div>
+                                <p>
+                               
+<!-- <i class="ri-printer-fill" [routerLink]="['../ticketsucces']">Imprimir</i> -->
+         <button 
+             [routerLink]="['/ticketsuccess']"
+                     data-bs-dismiss="modal"
+          
+                     
+                     class="btn btn-md-arrow border border-solid border-snow bg-black color-snow  w-100"   style="color:white; margin-top:10%; font-weight:900; justify-content: center;">Vista de impresion
+                    <div class="ico">
+                        <i class="ri-printer-line color-snow w-100"></i>
+                    </div>
+                    </button>
+                                </p>
 
                             </div>
                         </div>                  
@@ -784,9 +841,11 @@ data-bs-dismiss="modal"
                         <i class="ri-check-line"></i>
                     </div>
                     </button>  
-                    <button  [hidden]="!sendTicketFlag || empty || ticketListSize===0 || step!=2 || !methodSelected || pay-total<0"
-data-bs-dismiss="modal"
-                        (click)="next(3)"
+                    <button  [hidden]="!sendTicketFlag || empty || ticketListSize===0 || step!=2 || !methodSelected || pay-total<0" 
+                     data-bs-target="#mdllTicket" 
+                     data-bs-dismiss="modal"
+                     (click)="next(3)"
+                     
                      class="btn btn-md-arrow bg-primary w-100" style="color:white;"  style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Aceptar
                     <div class="ico">
                         <i class="ri-check-line"></i>

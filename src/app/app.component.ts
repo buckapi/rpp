@@ -119,6 +119,7 @@ branchs$:any;
         this.order.cobro=this.pay;
         this.order.cambio=this.pay-this.total;
         this.order.ticketServices=this.ticketServices;
+             this._butler.ticket=this.order;
         this.dataApiService.saveOrder(this.order)
         .subscribe((res:any) => {
           this.toastSvc.success("Ticket agregado con exito!" );
@@ -131,7 +132,7 @@ branchs$:any;
              this.methodSelected=false;
              this.onAdd=false;
              this.empty=true;
-          this.router.navigate(['/estilistas']);
+          this.router.navigate(['/ticketsuccess']);
         });  
       }
       this.step=step;

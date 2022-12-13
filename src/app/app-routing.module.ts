@@ -35,6 +35,7 @@ const routes: Routes = [
 { path: 'services', loadChildren: () => import('./components/pages/services/services.module').then(m => m.ServicesModule) },
 { path: 'settings', loadChildren: () => import('./components/pages/settings/settings.module').then(m => m.SettingsModule) },
 { path: 'tickets', loadChildren: () => import('./components/pages/tickets/tickets.module').then(m => m.TicketsModule) },
+{ path: 'ticketsuccess', loadChildren: () => import('./components/pages/ticketsuccess/ticketsuccess.module').then(m => m.TicketsuccessModule) },
  { path:'**',pathMatch:'full',redirectTo:'home'}
 ];
 
