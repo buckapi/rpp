@@ -18,7 +18,6 @@ import { SwiperOptions } from 'swiper';
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { DataService } from '@app/services/data.service'; 
 import { DataApiService } from '@app/services/data-api.service'; 
-
 import * as $ from 'jquery';
 @Component({
   selector: 'app-root',
@@ -26,6 +25,11 @@ import * as $ from 'jquery';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
+   methods:any=[
+    {name:"transferencia"},
+    {name:"Efectivo"},
+    {name:"credito"}
+  ];
  deviceInfo:any=null
 branchsSelected:any=false;
   @ViewChild('uploader', { static: true }) uploader: FilePickerComponent;
@@ -39,8 +43,8 @@ branchs$:any;
  [
       'assets/assetsryal/work.png'
     ]
-  public options:any=[];
-  public ticketServices:any=[];
+    public options:any=[];
+    public ticketServices:any=[];
     public specialtyToDelete :any={};
     public stylistToDelete :any={};
     public serviceToDelete :any={};
@@ -56,15 +60,31 @@ branchs$:any;
     empty = true;
     sendTicketFlag = false;
     addTicketFlag = false;
-  submittedSpecialty = false;
-  submittedService = false;
-  showB=false;  
-  category="Seleccione una!";
-  branchSelected="";
-  mensaje="Salida registrada!";
-  randomSerial=0;
-  ammount=0;
-  total=0;
+    submittedSpecialty = false;
+    submittedService = false;
+    submittedAddService = false;    
+    submittedPaymment = false;
+    showB=false;  
+    methodSelected=false;  
+    category="Seleccione una!";
+    branchSelected="";
+    mensaje="Salida registrada!";
+    randomSerial=0;
+    ticketListSize=0;
+    pay=0;
+    ammount=0;
+    total=0;
+    step=1;
+    public    setMethod(index:any){
+      this.methodSelected=true;
+      // this.step=step;
+    }
+    public    back(step:any){
+      this.step=step;
+    }
+    public    next(step:any){
+      this.step=step;
+    }
     get f(): { [key: string]: AbstractControl } {
       return this.specialty.controls;
     }
@@ -75,23 +95,28 @@ branchs$:any;
       return this.service.controls;
     }
     get z(): { [key: string]: AbstractControl } {
-      return this.service.controls;
+      return this.addServiceForm.controls;
+    }
+    get r(): { [key: string]: AbstractControl } {
+      return this.addServiceForm.controls;
     }
 
-   addServiceForm: FormGroup = new FormGroup({
-    ammount: new FormControl('')
-  });
-   specialty: FormGroup = new FormGroup({
-    name: new FormControl('')
-  });
-   stylist: FormGroup = new FormGroup({
-    name: new FormControl('')
-  });
-   service: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    basePrice: new FormControl('')
-
-  });
+     paymmentForm: FormGroup = new FormGroup({
+      // pay: new FormControl('')
+    });
+     addServiceForm: FormGroup = new FormGroup({
+      ammount: new FormControl('')
+    });
+     specialty: FormGroup = new FormGroup({
+      name: new FormControl('')
+    });
+     stylist: FormGroup = new FormGroup({
+      name: new FormControl('')
+    });
+     service: FormGroup = new FormGroup({
+      name: new FormControl(''),
+      basePrice: new FormControl('')
+    });
 
 
   new: FormGroup = new FormGroup({ 
@@ -99,10 +124,10 @@ branchs$:any;
   name: new FormControl(''),
   price: new FormControl(''),
   });
- i=1;
-two=false;
-one=true;
-three=false;
+  i=1;
+  two=false;
+  one=true;
+  three=false;
   public captions: UploaderCaptions = {
     dropzone: {    
       title: 'Foto del estilista',
@@ -119,7 +144,6 @@ three=false;
     },
   };
     public isError = false;
-    // public images:any[]=[];
     public cropperOptions = {
     minContainerWidth: '300',
     minContainerHeight: '300',
@@ -133,12 +157,17 @@ three=false;
     },
     spaceBetween: 30
   };
-  title = 'motogo';
-element:any;
-public quantity : number=1; 
-public sent : boolean=false; 
-public subTotalGral : number=0; 
-public preview :any={
+
+
+ 
+
+
+  title = 'ryalpos';
+  element:any;
+  public quantity : number=1; 
+  public sent : boolean=false; 
+  public subTotalGral : number=0; 
+  public preview :any={
   quantity:1,
   image:"",
   subTotal:0,
@@ -156,18 +185,16 @@ public preview :any={
     private formBuilder: FormBuilder,
     private readonly toastSvc: ToastrService,
     public script:ScriptService,
+    public dataApi: DataService,
+    public dataApiService: DataApiService,
     public bikersScript:BikersService,
     public _butler:Butler,
     public router:Router,
     private elementRef: ElementRef,
-    private deviceService: DeviceDetectorService,
-        public dataApi: DataService,
-    public dataApiService: DataApiService
+    private deviceService: DeviceDetectorService
   ){
     document.getElementById('modal1');
      this.script.load(     
-       // 'glightbox',
-       //    'swiper'
       )
       .then(data => {
       })
@@ -179,62 +206,29 @@ public preview :any={
   public delete(service:any){
   }
 
-public setBranch(name:any){
-  console.log('dato: '+name);
-this.itemStylisty.category=name;
-this.branchsSelected=true;
-this.sendStylistFlag=true;
-this.branchSelected=name;
-}
-public openModal(i:any){
-this._butler.modalOption=i;
-
-}
+  public setBranch(name:any){
+    console.log('dato: '+name);
+    this.itemStylisty.category=name;
+    this.branchsSelected=true;
+    this.sendStylistFlag=true;
+    this.branchSelected=name;
+  }
+  public openModal(i:any){
+    this._butler.modalOption=i;
+  }
     onIsError(): void {
     this.isError = true;
     setTimeout(() => {
       this.isError = false;
     }, 4000);
   }
-public minus(){
-  if (this.quantity>1){
-    this.quantity=this.quantity-1;
-  }
-}
-public plus(){
-  this.quantity=this.quantity+1;
-}
-// public calculate(){
-//   this.subTotalGral=0;
-//   let indice = this._butler.car.length;
-//     for (let i = 0; i < indice; i++){
-//       this.subTotalGral=this.subTotalGral+this._butler.car[i].subTotal;
-//       this._butler.subTotalGral=this.subTotalGral;
-//     }
-//   this.sent=true;
-//   this.router.navigate(['/shop']);
-// }
-  public addToBag(quantity:any){
-    this._butler.numProd=this._butler.numProd+1;
-    this.tixToAdd.onCar=true;
-    if(this._butler.numProd>=3){
-      this.tixToAdd.onCar=false;
-      this._butler.hidden=true;
+  public minus(){
+    if (this.quantity>1){
+      this.quantity=this.quantity-1;
     }
-    this.tixToAdd.quantity=quantity;
-    this.tixToAdd.name=this._butler.preview.name;
-    this.tixToAdd.price=this._butler.preview.price;
-    this.tixToAdd.images=this._butler.preview.images;
-    this._butler.subTotal=this._butler.subTotal+(quantity*this._butler.preview.price);
-     this._butler.car.push(this.tixToAdd);
-    $('#modal1').removeClass("is-visible");
-    this.preview.product=this._butler.preview;
-    this.preview.quantity=this.quantity;
-    this.preview.image=this._butler.imagePreviewProduct;
-    this.preview.subTotal=this.quantity*this.preview.product.price;
-    this.calculate();
-    this.tixToAdd={};
-    this.quantity=1;
+  }
+  public plus(){
+    this.quantity=this.quantity+1;
   }
 
   public sendService(){
@@ -249,34 +243,34 @@ public plus(){
     this.toastSvc.success("servicio agregado con exito!" );
     this.router.navigate(['/sumary']);
     });    
-}
-public deleteSpecialty(){
-  this.specialtyToDelete=this._butler.specialtyToDelete;;
-  this.specialtyToDelete.status="deleted";
-  this.toastSvc.info("Especialidad borrada con exito!" );
-  this.dataApiService.deleteSpecialty( this.specialtyToDelete.id)
-        .subscribe(
-           tix => this.router.navigate(['/sumary'])
-      );
-}
-public deleteService(){
-  this.serviceToDelete=this._butler.serviceToDelete;;
-  this.serviceToDelete.status="deleted";
-  this.toastSvc.info("Servicio borrado con exito!" );
-  this.dataApiService.deleteService( this.serviceToDelete.id)
-        .subscribe(
-           tix => this.router.navigate(['/sumary'])
-      );
-}
-public deleteStylist(){
-  this.stylistToDelete=this._butler.stylistToDelete;;
-  this.stylistToDelete.status="deleted";
-  this.toastSvc.info("Estilista borrado con exito!" );
-  this.dataApiService.deleteStylist(this.stylistToDelete.id)
-        .subscribe(
-           tix => this.router.navigate(['/sumary'])
-      );
-}
+  }
+  public deleteSpecialty(){
+    this.specialtyToDelete=this._butler.specialtyToDelete;;
+    this.specialtyToDelete.status="deleted";
+    this.toastSvc.info("Especialidad borrada con exito!" );
+    this.dataApiService.deleteSpecialty( this.specialtyToDelete.id)
+          .subscribe(
+             tix => this.router.navigate(['/sumary'])
+        );
+  }
+  public deleteService(){
+    this.serviceToDelete=this._butler.serviceToDelete;;
+    this.serviceToDelete.status="deleted";
+    this.toastSvc.info("Servicio borrado con exito!" );
+    this.dataApiService.deleteService( this.serviceToDelete.id)
+          .subscribe(
+             tix => this.router.navigate(['/sumary'])
+        );
+  }
+  public deleteStylist(){
+    this.stylistToDelete=this._butler.stylistToDelete;;
+    this.stylistToDelete.status="deleted";
+    this.toastSvc.info("Estilista borrado con exito!" );
+    this.dataApiService.deleteStylist(this.stylistToDelete.id)
+          .subscribe(
+             tix => this.router.navigate(['/sumary'])
+        );
+  }
   public sendStylist(){
     this.submittedStylist=true;
     if(this.stylist.invalid){
@@ -381,22 +375,37 @@ public loadCards(){
    
     });
 }
+public remove(index:any){
+ this.total=this.total-this.ticketServices[index].ammount;
+ this.ticketListSize=this.ticketListSize-1;
+this.ticketServices.splice(index,1);
+}
 public addServ(){
     this._butler.serviceToAdd.ammount=this.addServiceForm.value.ammount;
     this.ticketServices.push(this._butler.serviceToAdd);
     this.total=this.total+this.addServiceForm.value.ammount;
     this.ammount=0;
+    this.addServiceForm.value.ammount=0;
     this.onAdd=false;
     this.empty=false;
+    this.sendTicketFlag=true;
+    this.ticketListSize=this.ticketListSize+1;
 }
 
 public addService(i:any){
   if (i==="Seleccione..."){
     return
   }
+   this.submittedAddService=true;
+    if(this.addServiceForm.invalid){
+      return
+    }
   this.onAdd=true;
   this.addTicketFlag=true;
   this._butler.serviceToAdd=this._butler.cards[i];
+}
+public setEqual(){
+  this.pay=this.total;
 }
 public loadBranchs(){
   this.branchs$=this.dataApiService.getAllBranchs();
@@ -413,6 +422,11 @@ public loadBranchs(){
     this.stylist = this.formBuilder.group(
       {
         name: ['', Validators.required],
+      }
+    );   
+     this.paymmentForm = this.formBuilder.group(
+      {
+        // pay: [0, Validators.required],
       }
     );
     this.specialty = this.formBuilder.group(
