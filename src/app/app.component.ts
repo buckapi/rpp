@@ -26,9 +26,9 @@ import * as $ from 'jquery';
 })
 export class AppComponent implements AfterViewInit {
    methods:any=[
-    {name:"transferencia"},
     {name:"Efectivo"},
-    {name:"credito"}
+    {name:"Tarjeta"},
+    {name:"Transferencia"}
   ];
  deviceInfo:any=null
 branchsSelected:any=false;
