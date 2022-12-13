@@ -75,6 +75,11 @@ branchs$:any;
     ammount=0;
     total=0;
     step=1;
+    public    setPriceS(){
+      // this.methodSelected=true;
+      this.ammount=this._butler.serviceToAdd.basePrice;
+      // this.step=step;
+    }
     public    setMethod(index:any){
       this.methodSelected=true;
       // this.step=step;
@@ -105,7 +110,7 @@ branchs$:any;
       // pay: new FormControl('')
     });
      addServiceForm: FormGroup = new FormGroup({
-      ammount: new FormControl('')
+      // ammount: new FormControl('')
     });
      specialty: FormGroup = new FormGroup({
       name: new FormControl('')
@@ -381,11 +386,11 @@ public remove(index:any){
 this.ticketServices.splice(index,1);
 }
 public addServ(){
-    this._butler.serviceToAdd.ammount=this.addServiceForm.value.ammount;
+    this._butler.serviceToAdd.ammount=this.ammount;
     this.ticketServices.push(this._butler.serviceToAdd);
-    this.total=this.total+this.addServiceForm.value.ammount;
+    this.total=this.total+this.ammount;
     this.ammount=0;
-    this.addServiceForm.value.ammount=0;
+    this.ammount=0;
     this.onAdd=false;
     this.empty=false;
     this.sendTicketFlag=true;
@@ -442,7 +447,7 @@ public loadBranchs(){
     );
     this.addServiceForm = this.formBuilder.group(
       {
-        ammount: [0, Validators.required]
+        // ammount: [0, Validators.required]
       }
     );
 this.calculate() 

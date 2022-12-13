@@ -491,9 +491,13 @@
                                     </div>
                                     <div [hidden]="!onAdd">
                                         
-                                    {{this._butler.serviceToAdd.name}} Precio sugerido: {{this._butler.serviceToAdd.basePrice}} 
+                                    {{this._butler.serviceToAdd.name}} Precio sugerido: 
+<span (click)="setPriceS()" style="cursor:pointer;color: blue;">
+    
+                                    {{this._butler.serviceToAdd.basePrice}} 
+</span>
                                     </div>
-                                    <div class="form-group" [hidden]="!onAdd">
+                          <!--           <div class="form-group" [hidden]="!onAdd">
                                         <input  class="form-control"    type="number"
                                         [ngModel]="ammount"
                                         formControlName="ammount"
@@ -501,10 +505,15 @@
                                         [ngClass]="{ 'is-invalid': submittedAddService && z['ammount'].errors }" 
                                         style="margin-top:10%;" 
                                         >
-                                    </div>
-                                    <div *ngIf="submittedAddService && z['ammount'].errors" class="invalid-feedback">
+                                    </div> -->
+                                    <p></p>
+                                    <input type="number" class="form-control"  [ngModelOptions]="{standalone: true}"  [(ngModel)]="ammount"
+                                        style="height: 5rem;width: 10rem;font-size: 2.3rem;" 
+                                        >
+                                    <!-- </div> -->
+                             <!--        <div *ngIf="submittedAddService && z['ammount'].errors" class="invalid-feedback">
                                         <div *ngIf="z['ammount'].errors['required']">Campo requerido</div>
-                                    </div>
+                                    </div> -->
                                     <p></p>
                                      <p>
                                        
@@ -516,7 +525,7 @@
                                         <i class="ri-add-line"></i>
                                     </div>
                                     </button>
-                                    <button [hidden]="!addTicketFlag || !onAdd" type="submit"  class="btn btn-md-arrow bg-success w-100" style="color:white;" style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Agregar
+                                    <button [hidden]="!addTicketFlag || !onAdd || ammount==0" type="submit"  class="btn btn-md-arrow bg-success w-100" style="color:white;" style="margin-top:10%;color:white; font-weight:900; justify-content: center;">Agregar
                                     <div class="ico">
                                       <i class="ri-arrow-drop-right-line"></i>
                                     </div>
