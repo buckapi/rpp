@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class Butler {
     car:any[]=[];
-        branchs:any[]=[];
+    branchs:any[]=[];
     ticket:any={
         npedido:''
     };
@@ -29,7 +29,7 @@ export class Butler {
     especialistasSize:number=0;
     imagePreviewProduct:string="";
     stylistName:string="";
-      subTotal:number=0;
+    subTotal:number=0;
     review:boolean=false;
     vector:any={};       
     string:string=""; 

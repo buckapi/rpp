@@ -108,29 +108,31 @@ branchs$:any;
     return Math.round(Math.random()*(b-a)+parseInt(a));
   }
     public    next(step:any){
-          if(step==3){
+      if(step==3){
         this.order.total=this.total;
         this.order.method=this.methodSelectedField;
         this.order.customer=this.customer;
         this.order.stylist=this._butler.stylistName;
-          this.order.npedido=this.aleatorio(10000,99999);
+        this.order.npedido=this.aleatorio(10000,99999);
         this.order.status="activated";
         this.order.statusClose="pending";
+        this.order.cobro=this.pay;
+        this.order.cambio=this.pay-this.total;
         this.order.ticketServices=this.ticketServices;
-          this.dataApiService.saveOrder(this.order)
-    .subscribe((res:any) => {
-    this.toastSvc.success("Ticket agregado con exito!" );
-     this.step=1;
-     this.ticketServices=[];
-     this.ammount=0;
-     this.total=0;
-     this.pay=0;
-     this.customer="-";
-       this.methodSelected=false;
-       this.onAdd=false;
-       this.empty=true;
-    this.router.navigate(['/estilistas']);
-    });  
+        this.dataApiService.saveOrder(this.order)
+        .subscribe((res:any) => {
+          this.toastSvc.success("Ticket agregado con exito!" );
+           this.step=1;
+           this.ticketServices=[];
+           this.ammount=0;
+           this.total=0;
+           this.pay=0;
+           this.customer="-";
+             this.methodSelected=false;
+             this.onAdd=false;
+             this.empty=true;
+          this.router.navigate(['/estilistas']);
+        });  
       }
       this.step=step;
     }
