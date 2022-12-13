@@ -21,6 +21,9 @@ import { CapitalizeFirstPipe } from '@pipes/capitalizefirst.pipe';
 })
 export class TicketsComponent implements AfterViewInit {
   tickets$: any;
+  ticket:any={
+    npedido: ''
+  }
   constructor(  private cdRef:ChangeDetectorRef,
       public script:ScriptService,
       private apollo: Apollo,
@@ -28,8 +31,13 @@ export class TicketsComponent implements AfterViewInit {
       public dataApiService: DataApiService,
       public _butler: Butler,
       public router:Router) { }
-  public loadFromRestUniversal(){
+      public loadFromRestUniversal(){
       this.tickets$=this.dataApiService.getAllRppoders();
+  }
+  openModalTicket(i:any,ticket:any){
+    this._butler.modalOption=i;
+    console.log("ticket"+ticket.npedido);
+    this._butler.ticket=ticket;
   }
   ngAfterViewInit(): void {
         this.loadFromRestUniversal();

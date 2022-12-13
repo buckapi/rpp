@@ -25,6 +25,9 @@ import * as $ from 'jquery';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
+  ticket:any={
+    npedido:''
+  }
    methods:any=[
     {name:"Efectivo"},
     {name:"Tarjeta"},
@@ -261,6 +264,7 @@ branchs$:any;
   }
   public openModal(i:any){
     this._butler.modalOption=i;
+    this.ticket=this._butler.ticket;
   }
     onIsError(): void {
     this.isError = true;
