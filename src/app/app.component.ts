@@ -46,6 +46,14 @@ branchs$:any;
     public options:any=[];
     public ticketServices:any=[];
     public specialtyToDelete :any={};
+    public order :any={
+      ticketServices:[],
+      total:0,
+      method:"",
+      status:"",
+      statusClose:"",
+      customer:""
+    };
     public stylistToDelete :any={};
     public serviceToDelete :any={};
     public itemSpecialty :any={};
@@ -67,8 +75,10 @@ branchs$:any;
     showB=false;  
     methodSelected=false;  
     category="Seleccione una!";
+    methodSelectedField="";
     branchSelected="";
     mensaje="Salida registrada!";
+    customer="";
     randomSerial=0;
     ticketListSize=0;
     pay=0;
@@ -82,12 +92,27 @@ branchs$:any;
     }
     public    setMethod(index:any){
       this.methodSelected=true;
+      this.methodSelectedField=this.methods[index].name;
       // this.step=step;
     }
     public    back(step:any){
       this.step=step;
+  
     }
     public    next(step:any){
+          if(step==3){
+        this.order.total=this.total;
+        this.order.method=this.methodSelectedField;
+        this.order.customer=this.customer;
+        this.order.status="activated";
+        this.order.statusClose="pending";
+        this.order.ticketServices=this.ticketServices;
+          this.dataApiService.saveOrder(this.order)
+    .subscribe((res:any) => {
+    this.toastSvc.success("Ticket agregado con exito!" );
+    this.router.navigate(['/estilistas']);
+    });  
+      }
       this.step=step;
     }
     get f(): { [key: string]: AbstractControl } {
