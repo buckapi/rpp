@@ -49,7 +49,9 @@ branchs$:any;
     public order :any={
       ticketServices:[],
       total:0,
+      npedido:0,
       method:"",
+      stylist:"",
       status:"",
       statusClose:"",
       customer:""
@@ -99,11 +101,16 @@ branchs$:any;
       this.step=step;
   
     }
+     public aleatorio(a:any,b:any) {
+    return Math.round(Math.random()*(b-a)+parseInt(a));
+  }
     public    next(step:any){
           if(step==3){
         this.order.total=this.total;
         this.order.method=this.methodSelectedField;
         this.order.customer=this.customer;
+        this.order.stylist=this._butler.stylistName;
+          this.order.npedido=this.aleatorio(10000,99999);
         this.order.status="activated";
         this.order.statusClose="pending";
         this.order.ticketServices=this.ticketServices;
@@ -364,9 +371,7 @@ public  setCategory(){
   public onFileAdded(file: FilePreviewModel) {
     this.myFiles.push(file);
   }
-public aleatorio(a:any,b:any) {
-    return Math.round(Math.random()*(b-a)+parseInt(a));
-  }
+
   public sendSpecialty(){
     this.submittedSpecialty=true;
     if(this.specialty.invalid){

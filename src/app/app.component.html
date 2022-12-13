@@ -48,12 +48,12 @@
                     </button>
                 </div>
                 <div class="item_link"  >
-                    <a [routerLink]="['/sumary']"class="btn btn_navLink" aria-label="btnNavigation">
+                    <a [routerLink]="['/tickets']"class="btn btn_navLink" aria-label="btnNavigation">
                         <div class="icon_current" >
-                            <i class="ri-todo-line " [ngStyle]="{'color': router.url.includes('/sumary') ? 'blue' : 'black'}"></i>
+                            <i class="ri-todo-line " [ngStyle]="{'color': router.url.includes('/tickets') ? 'blue' : 'black'}"></i>
                         </div>
                         <div class="icon_active">
-                            <i class="ri-todo-fill" [ngStyle]="{'color': router.url.includes('/sumary')  ? 'blue' : 'black'}"></i>
+                            <i class="ri-todo-fill" [ngStyle]="{'color': router.url.includes('/tickets')  ? 'blue' : 'black'}"></i>
                         </div>
                     </a>
                 </div>
@@ -582,7 +582,7 @@
                                         
                                     {{this._butler.serviceToAdd.name}} Precio sugerido: {{this._butler.serviceToAdd.basePrice}} 
                                     </div>
-                               <p (click)="setEqual()" style="cursor:pointer;" [hidden]="empty">Total a pagar: <span style="color:blue;">{{total}}</span></p>
+                               <p (click)="setEqual()" style="cursor:pointer;" [hidden]="empty">Total a pagar: <span style="color:blue;">{{total  |  number :'1.0'}}</span></p>
                            <div class="col-lg-4">
                             <h4>Pago: </h4>
                                         <input type="number" class="form-control"  [ngModelOptions]="{standalone: true}"  [(ngModel)]="pay"
@@ -599,7 +599,7 @@
                              
                                     <h4 [hidden]="pay-total<0">Cambio: </h4>
                                         <h1>
-                                            <span [hidden]="pay-total<0">{{pay-total |  number :'1.2-2'}}</span>
+                                            <span [hidden]="pay-total<0">{{pay-total |  number :'1.0'}}</span>
                                         </h1>
                                         <h4>Cliente: </h4>
                                       <input type="text" class="form-control" placeholder="Nombre dle cliente" [ngModelOptions]="{standalone: true}"  [(ngModel)]="customer"

@@ -58,6 +58,10 @@ export class DataApiService {
 		const url_api = 'https://db.buckapi.us:7001/api/transactions';
 		return this.http.get(url_api);
 	}
+	getAllRppoders(){
+		const url_api = 'https://db.buckapi.us:7001/api/rpporders';
+		return this.http.get(url_api);
+	}
 	getAllMembers(){
 		const url_api = 'https://db.buckapi.us:7001/api/members';
 		return this.http.get(url_api);
