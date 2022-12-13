@@ -694,22 +694,23 @@ data-bs-dismiss="modal"
                                     </ul>
                                 </div>
                                 <p></p>
-                                <h2>
-                                    Total:
-                                    <span style="color:blue;">
+                                <div>
+                                    <div>Total:</div>
+                                    <div> 
+                                        <span style="color:blue;">
                                      {{_butler.ticket.total | number :'1.0'}}
-                                 </span>
-                                </h2>  <h2>
-                                    Cobro: 
-                                    <span style="color:blue;">
-                                    {{_butler.ticket.pay | number :'1.0'}}
-                                </span>
-                                </h2> <h2>
-                                    Cambio:
-                                 <span style="color:blue;">
-                                     {{_butler.ticket.cambio | number :'1.0'}}
-                                 </span>
-                                </h2>
+                                        </span>
+                                    </div>
+                                </div>
+                                 <div>
+                                 <div>Cobro:</div>
+                                    <div> 
+                                        <span style="color:blue;">
+                                     {{_butler.ticket.pay | number :'1.0'}}
+                                        </span>
+                                    </div>
+                                </div>
+                            
 
                             </div>
                         </div>                  
