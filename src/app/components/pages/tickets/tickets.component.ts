@@ -36,7 +36,6 @@ export class TicketsComponent implements AfterViewInit {
   }
   openModalTicket(i:any,ticket:any){
     this._butler.modalOption=i;
-    console.log("ticket"+ticket.npedido);
     this._butler.ticket=ticket;
   }
   ngAfterViewInit(): void {
