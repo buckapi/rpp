@@ -37,6 +37,7 @@
     "ngx-daterangepicker-material": "^6.0.4",
     "ngx-device-detector": "^3.0.0",
     "ngx-infinite-scroll": "^13.1.0",
+    "ngx-print": "^1.2.1",
     "ngx-toastr": "14.3.0",
     "ngx-ui-loader": "^13.0.0",
     "ngx-upper-case-directive": "^1.0.3",
