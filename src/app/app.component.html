@@ -83,10 +83,14 @@
                             <div class="grid_buttonUpload">
                                 <div class="row">     
                                     <div class="col-md-6">
-                                          <ngx-awesome-uploader class="fondo" #uploader [adapter]="adapter" [enableCropper]="true"     [captions]="captions">
-                                    </ngx-awesome-uploader >
+                                
+                                  <!--   <source srcset="assets/assetsryal/images/work.webp" type="image/webp"> -->
+                                    <img class="big-image" src="assets/assetsryal/work.png" alt="" style="border-radius:50%;width:50%;">
+                      
+                                         <!--  <ngx-awesome-uploader class="fondo" #uploader [adapter]="adapter" [enableCropper]="true"     [captions]="captions">
+                                    </ngx-awesome-uploader > -->
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="padding-top: 3%;">
                                         <div class="form-group">
                                              <label>Nombre</label>
                                             <input  class="form-control"  upperCase  type="text"
@@ -94,7 +98,7 @@
                                             formControlName="name"
                                             class="form-control"
                                             [ngClass]="{ 'is-invalid': submittedSpecialty && g['name'].errors }" 
-                                            style="margin-top:10%;" 
+                                            
                                             >
                                         </div>
                                         <div *ngIf="submittedSpecialty && g['name'].errors" class="invalid-feedback">
