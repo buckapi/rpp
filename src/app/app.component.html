@@ -757,7 +757,7 @@ data-bs-dismiss="modal"
      <button 
              [routerLink]="['/ticketsuccess']"
                      data-bs-dismiss="modal"
-          
+          [hidden]="_butler.deviceType!='Escritorio'"
                      
                      class="btn btn-md-arrow border border-solid border-snow bg-black color-snow  w-100"   style="color:white; margin-top:10%; font-weight:900; justify-content: center;">Vista de impresion
                     <div class="ico">
